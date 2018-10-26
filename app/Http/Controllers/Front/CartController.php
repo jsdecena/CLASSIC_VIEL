@@ -13,9 +13,11 @@ use App\Shop\Products\Transformations\ProductTransformable;
 use Gloudemans\Shoppingcart\CartItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use Config;
+use App;
 class CartController extends Controller
 {
+
     use ProductTransformable;
 
     /**
@@ -38,6 +40,7 @@ class CartController extends Controller
      */
     private $productAttributeRepo;
 
+    public $attrVal = 0;
     /**
      * CartController constructor.
      * @param CartRepositoryInterface $cartRepository
@@ -95,22 +98,13 @@ class CartController extends Controller
               ->with('error', 'we have only '.$product->quantity);
         }
 
-        if ($product->attributes()->count() > 0) {
-            $productAttr = $product->attributes()->where('default', 1)->first();
-
-            if (isset($productAttr->sale_price)) {
-                $product->price = $productAttr->price;
-
-                if (!is_null($productAttr->sale_price)) {
-                    $product->price = $productAttr->sale_price;
-                }
-            }
-        }
 
         if ($request->has('productAttribute')) {
             $attr = $this->productAttributeRepo->findProductAttributeById($request->input('productAttribute'));
             $product->price = $attr->price;
+            $attrVal = $attr->id;
         }
+      
 
         $this->cartRepo->addToCart($product, $request->input('quantity'));
 
@@ -131,13 +125,12 @@ class CartController extends Controller
 
       $cart = $this->cartRepo->updateQuantityInCart($id, $quantity);
 
-      // dd($cart->product);
+
       if($cart->product->quantity < $quantity)
       {
         $this->cartRepo->updateQuantityInCart($cart->rowId,$cart->product->quantity);
         return back()
             ->with('error', 'we have only '.$cart->product->quantity);
-
       }
       else
         $cart;

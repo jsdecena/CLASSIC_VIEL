@@ -43,16 +43,17 @@
                 <small>{{ config('cart.currency') }} {{ $product->price }}</small>
             </h1>
             <div class="description">{!! $product->description !!}</div>
-            
+
                 <hr>{!!  str_limit($product->description, 100, ' ...') !!}
             <hr>
+
             <div class="row">
                 <div class="col-md-12">
                     @include('layouts.errors-and-messages')
                     <form action="{{ route('cart.store') }}" class="form-inline" method="post">
                         {{ csrf_field() }}
                         @if(isset($productAttributes) && !$productAttributes->isEmpty())
-                            <div class="form-group">
+                            <div class="form-group" id="text" style="display:block">
                                 <label for="productAttribute">Choose Combination</label> <br />
                                 <select name="productAttribute" id="productAttribute" class="form-control select2">
                                     @foreach($productAttributes as $productAttribute)
@@ -66,8 +67,39 @@
                                         </option>
                                     @endforeach
                                 </select>
-                            </div><hr>
+                            </div>
+                            <div id="text2" style="display:none">
+                              <label for="productAttribute">Custome Size</label> <br />
+                              <input type="number"
+                               class="form-control"
+                               name="LENGTH"
+                               id="quantity"
+                               placeholder="LENGTH"
+                               value="{{ old('quantity') }}" />
+                              <input type="number"
+                                class="form-control"
+                                name="BUST"
+                                id="quantity"
+                                placeholder="BUST"
+                                value="{{ old('quantity') }}" /><br />
+                              <input type="number"
+                               class="form-control"
+                               name="ARM"
+                               id="quantity"
+                               placeholder="ARM"
+                               value="{{ old('quantity') }}" />
+                              <input type="number"
+                                class="form-control"
+                                name="BOTTOM"
+                                id="quantity"
+                                placeholder="BOTTOM"
+                                value="{{ old('quantity') }}" /><br />
+                            </div>
+                            Checkbox: <input type="checkbox" id="myCheck"  onclick="myFunction()"><br />
+                            <hr>
                         @endif
+
+
                         <div class="form-group">
                             <input type="number"
                                    class="form-control"
@@ -96,5 +128,18 @@
                 inlinePane: false
             });
         });
+
+        function myFunction() {
+          var checkBox = document.getElementById("myCheck");
+          var text = document.getElementById("text");
+          var text2 = document.getElementById("text2");
+          if (checkBox.checked == true){
+              text.style.display = "none";
+              text2.style.display = "block";
+          } else {
+             text.style.display = "block";
+             text2.style.display = "none";
+          }
+      }
     </script>
 @endsection

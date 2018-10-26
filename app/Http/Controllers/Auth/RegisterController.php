@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-
+use App\Mail\WelcomeEmail;
 class RegisterController extends Controller
 {
     /*
@@ -65,7 +65,7 @@ class RegisterController extends Controller
     {
         $customer = $this->create($request->except('_method', '_token'));
         Auth::login($customer);
-
+        // \Mail::to($customer)->send(new WelcomeEmail);
         return redirect()->route('accounts');
     }
 }

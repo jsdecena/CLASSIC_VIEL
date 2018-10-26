@@ -74,7 +74,13 @@ Route::namespace('Auth')->group(function () {
     Route::get('logout', 'LoginController@logout');
 });
 
+Route::get('/lang/{lang?}',[
+     'uses'=>'LangSwitcherController@LangSwitcher',
+     'as'  => 'lang.switch'
+ ]);
+ 
 Route::namespace('Front')->group(function () {
+
     Route::get('/', 'HomeController@index')->name('home');
     Route::group(['middleware' => ['auth', 'web']], function () {
 
@@ -92,6 +98,7 @@ Route::namespace('Front')->group(function () {
         Route::get('checkout', 'CheckoutController@index')->name('checkout.index');
         Route::post('checkout', 'CheckoutController@store')->name('checkout.store');
         Route::get('checkout/execute', 'CheckoutController@executePayPalPayment')->name('checkout.execute');
+        // Route::get('checkout/paytabs', 'CheckoutController@paytabs')->name('checkout.paytabs');
         Route::post('checkout/execute', 'CheckoutController@charge')->name('checkout.execute');
         Route::get('checkout/cancel', 'CheckoutController@cancel')->name('checkout.cancel');
         Route::get('checkout/success', 'CheckoutController@success')->name('checkout.success');

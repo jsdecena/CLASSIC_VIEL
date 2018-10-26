@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{Config::get('app.locale')}}">
 
 <head>
 
@@ -253,13 +253,19 @@
 </div>
                   <i class="fa fa-angle-down"></i>
                 </div>
+                <script type="text/javascript">
+                function handleSelect(elm)
+                {
+                window.location = elm.value;
+                }
+                </script>
+
                 <!-- End Header Currency -->
                 <div class="pull-right top-dropdown header-links">
-
                   <p class="label">Languages</p>
                   <ul class="links">
-                    <li><a href="" title="My Wishlist">ARABIC</a></li>
-                    <li><a href="" title="Checkout">ENGLISH</a></li>
+                    <li><a @if(session('locale')=='en') selected="{{Config::get('app.locale')}}" @endif href="{{route('lang.switch',['lang'=>'en'])}}">ENGLISH</a></li>
+                    <li><a @if(session('locale')=='ar') selected="selected" @endif href="{{route('lang.switch',['lang'=>'ar'])}}">ARABIC</a></li>
                   </ul>
 
                   <i class="fa fa-angle-down"></i>
@@ -316,15 +322,15 @@
               @endforeach
                 @if(auth()->check())
               <li class="level0 level-top ">
-                <a href="{{ route('accounts', ['tab' => 'profile']) }}"><span>My Account</span></a>
+                <a href="{{ route('accounts', ['tab' => 'profile']) }}"><span>{{ __('general.my_account') }}</span></a>
               </li>
-              <li><a href="{{ route('logout') }}"><i class="fa fa-sign-out"></i> Logout</a></li>
+              <li><a href="{{ route('logout') }}"><i class="fa fa-sign-out"></i> {{ __('general.logout') }}</a></li>
               @else
               <li class="level0 level-top  parent">
-                <a href="{{ route('login') }}"><span>Login</span></a>
+                <a href="{{ route('login') }}"><span>{{ __('general.login') }}</span></a>
               </li>
               <li class="level0 level-top  last">
-                <a href="{{ route('register') }}"><span>Register</span></a>
+                <a href="{{ route('register') }}"><span>{{ __('general.register') }}</span></a>
               </li>
               @endif
             </ul>
@@ -342,7 +348,11 @@
                 @else
                 <a href="{{route('front.category.slug', $category->slug)}}" class="level-top">
                   <span>
+                    @if(session('locale')=='en')
                      {{$category->name}}
+                    @else
+                      {{$category->name_ar}}
+                    @endif
                   </span>
                   <i class="fa fa-angle-down"></i>
                 </a>
@@ -353,14 +363,14 @@
               <li class="level0 level-top">
                 <a href="{{ route('accounts', ['tab' => 'profile']) }}" class="level-top">
                   <span>
-                    My Account
+                    {{ __('general.my_account') }}
                   </span>
                 </a>
               </li>
             <li class="level0 level-top parent-dropdown">
               <a href="{{ route('logout') }}" class="level-top">
                 <span>
-                  Logout
+                  {{ __('general.logout') }}
                 </span>
                 <i class="fa fa-angle-down"></i>
               </a>
@@ -369,14 +379,14 @@
             <li class="level0 level-top">
               <a href="{{ route('login') }}" class="level-top">
                 <span>
-                  Login
+                  {{ __('general.login') }}
                 </span>
               </a>
             </li>
             <li class="level0 level-top">
               <a href="{{ route('register') }}" class="level-top">
                 <span>
-                  Register
+                  {{ __('general.register') }}
                 </span>
               </a>
             </li>

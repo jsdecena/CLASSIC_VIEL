@@ -1,11 +1,11 @@
 @extends('layouts.front.app')
 
 @section('content')
-<div class="container">
+<div class="container content">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
+            <div class="panel panel-warning">
+              Register
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}

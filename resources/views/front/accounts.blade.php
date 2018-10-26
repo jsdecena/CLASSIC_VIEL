@@ -25,7 +25,40 @@
                     <!-- Tab panes -->
                     <div class="tab-content customer-order-list">
                         <div role="tabpanel" class="tab-pane @if(request()->input('tab') == 'profile')active @endif" id="profile">
-                            {{$customer->name}} <br /><small>{{$customer->email}}</small>
+                            <!-- {{$customer->name}} <br /><small>{{$customer->email}}</small><br />
+                            size1 :  <small>{{$customer->size1}}</small>
+                            size2 :  <small>{{$customer->size2}}</small>
+                            size3 :  <small>{{$customer->size3}}</small> -->
+                            <table class="table">
+                            <thead>
+                                <th>Name</th>
+                                <th>Email </th>
+                                <th>size1</th>
+                                <th>size2</th>
+                                <th>size3</th>
+                            </thead>
+                            <tbody>
+                                    <tr>
+                                        <td>{{$customer->name}}</td>
+                                        <td>{{$customer->email}}</td>
+                                        @if($customer->size1 != 0)
+                                        <td>{{$customer->size1}}</td>
+                                        <td>{{$customer->size2}}</td>
+                                        <td>{{$customer->size3}}</td>
+                                        @endif
+                                        <td>
+                                            <!-- <form method="post" action="" class="form-horizontal">
+                                                <div class="btn-group">
+                                                    <input type="hidden" name="_method" value="delete">
+                                                    {{ csrf_field() }}
+                                                    <a href="" class="btn btn-primary"> <i class="fa fa-pencil"></i> Edit</a>
+                                                    <button onclick="return confirm('Are you sure?')" type="submit" class="btn btn-danger"> <i class="fa fa-trash"></i> Delete</button>
+                                                </div>
+                                            </form> -->
+                                        </td>
+                                    </tr>
+                            </tbody>
+                        </table>
                         </div>
                         <div role="tabpanel" class="tab-pane @if(request()->input('tab') == 'orders')active @endif" id="orders">
                             @if(!$orders->isEmpty())

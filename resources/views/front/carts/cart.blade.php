@@ -77,6 +77,7 @@
                                         <div class="product-description">
                                             {!! $cartItem->product->description !!}
                                         </div>
+                                        
                                     </td>
                                     <td>
                                         <form action="{{ route('cart.update', $cartItem->rowId) }}" class="form-inline" method="post">

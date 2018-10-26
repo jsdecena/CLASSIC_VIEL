@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -168,6 +167,7 @@ return [
         App\Providers\GlobalTemplateServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
         Laratrust\LaratrustServiceProvider::class,
+        Damas\Paytabs\PaytabsServiceProvider::class,
     ],
 
     /*
@@ -218,6 +218,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Paytabs' => Damas\Paytabs\Facades\PaytabsFacade::class,
 
     ],
 

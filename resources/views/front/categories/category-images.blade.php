@@ -10,7 +10,7 @@
 
 <div style="background-image: url('../../img/SSS16_EDIT_7107_1024x1024.jpg')" class="parallax-box parrallax-page-title alt-bg parallax-shop" data-stellar-background-ratio="0.4">
   <div class="parallax-title-content">
-    <h1>SABEL - SS 2016</h1>
+    <h1>CLASSIC VEIL - 2018</h1>
     <div class="breadcrumbs">
       <ul>
         <li class="home">

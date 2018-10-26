@@ -38,6 +38,7 @@
         </tr>
         </tfoot>
         <tbody>
+        
         @foreach($cartItems as $cartItem)
             <tr>
                 <td>

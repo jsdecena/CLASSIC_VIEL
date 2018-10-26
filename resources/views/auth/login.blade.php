@@ -9,16 +9,18 @@
             <h2>Login to your account</h2>
             <form action="{{ route('login') }}" method="post" class="form-horizontal">
                 {{ csrf_field() }}
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" value="{{ old('email') }}" class="form-control" placeholder="Email" autofocus>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" name="password" id="password" value="" class="form-control" placeholder="xxxxx">
-                </div>
                 <div class="row">
-                    <button class="btn btn-default btn-block" type="submit">Login now</button>
+                <div class="form-group">
+                    <input class="col-md-4" type="email" id="email" name="email" value="{{ old('email') }}" class="form-control" placeholder="Email" autofocus>
+              </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <input type="password" name="password" id="password" value="" class="form-control col-md-4" placeholder="Password">
+              </div>
+              </div>
+                <div class="row">
+                    <button class="btn btn-primary btn-block" type="submit">Login now</button>
                 </div>
             </form>
             <div class="row">

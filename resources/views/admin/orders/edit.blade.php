@@ -164,7 +164,7 @@
                                     <td>{{ $order->address->address_2 }}</td>
                                     <td>
                                         @if(isset($order->address->city))
-                                            {{ $order->address->city->name }}
+                                            {{ $order->address->city }}
                                         @endif
                                     </td>
                                     <td>

@@ -20,12 +20,14 @@ use App\Shop\Products\Repositories\Interfaces\ProductRepositoryInterface;
 use App\Shop\Products\Transformations\ProductTransformable;
 use App\Shop\Shipping\ShippingInterface;
 use Exception;
+use Paytabs;
 use App\Http\Controllers\Controller;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use PayPal\Exception\PayPalConnectionException;
+use App;
 
 class CheckoutController extends Controller
 {
@@ -67,6 +69,11 @@ class CheckoutController extends Controller
     private $payPal;
 
     /**
+     *
+     */
+    private $vall;
+
+    /**
      * @var ShippingInterface
      */
     private $shippingRepo;
@@ -90,6 +97,11 @@ class CheckoutController extends Controller
         $payPalRepo = new PayPalExpressCheckoutRepository;
         $this->payPal = $payPalRepo;
         $this->shippingRepo = $shipping;
+
+
+        $valAttr = App::make('App\Http\Controllers\Front\CartController');
+        $this->vall = $valAttr;
+
     }
 
     /**
@@ -132,6 +144,7 @@ class CheckoutController extends Controller
             'payments' => $paymentGateways,
             'cartItems' => $this->cartRepo->getCartItemsTransformed(),
             'shipment_object_id' => $shipment_object_id,
+            'attr' => 2,
             'rates' => $rates
         ]);
     }
@@ -152,6 +165,9 @@ class CheckoutController extends Controller
         switch ($request->input('payment')) {
             case 'paypal':
                 return $this->payPal->process($shippingFee, $request);
+                break;
+            case 'paytabs':
+                return $this->paytabs->process($shippingFee, $request);
                 break;
             case 'stripe':
 
@@ -187,6 +203,7 @@ class CheckoutController extends Controller
             throw new PaypalRequestError($e->getMessage());
         }
     }
+
 
     /**
      * @param StripeExecutionRequest $request
@@ -229,6 +246,54 @@ class CheckoutController extends Controller
     public function success()
     {
         return view('front.checkout-success');
+    }
+
+    /**
+     * Success page
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function paytabs()
+    {
+      $pt = Paytabs::paytabs("yvj@hotmail.com", "dif7wmRdKsRGCtucXabSripAwpP98bFltVt0hld1N5IqzcCwnOpP7OqDefNmqtIUpbUGx8IkerKNEnk2bJSiyiWMxK9YeSSD4NkB");
+    $result = $pt->create_pay_page(array(
+      "merchant_email" => "MERCHANT_EMAIL",
+      'secret_key' => "SECRET_KEY",
+      'title' => "John Doe",
+      'cc_first_name' => "John",
+      'cc_last_name' => "Doe",
+      'email' => "customer@email.com",
+      'cc_phone_number' => "973",
+      'phone_number' => "33333333",
+      'billing_address' => "Juffair, Manama, Bahrain",
+      'city' => "Manama",
+      'state' => "Capital",
+      'postal_code' => "97300",
+      'country' => "BHR",
+      'address_shipping' => "Juffair, Manama, Bahrain",
+      'city_shipping' => "Manama",
+      'state_shipping' => "Capital",
+      'postal_code_shipping' => "97300",
+      'country_shipping' => "BHR",
+      "products_per_title"=> "Mobile Phone",
+      'currency' => "BHD",
+      "unit_price"=> "10",
+      'quantity' => "1",
+      'other_charges' => "0",
+      'amount' => "10.00",
+      'discount'=>"0",
+      "msg_lang" => "english",
+      "reference_no" => "1231231",
+      "site_url" => "https://your-site.com",
+      'return_url' => "https://www.mystore.com/paytabs_api/result.php",
+      "cms_with_version" => "API USING PHP"
+    ));
+
+        if($result->response_code == 4012){
+        return redirect($result->payment_url);
+          }
+          else
+          return redirect()->route('checkout.success');
     }
 
     /**

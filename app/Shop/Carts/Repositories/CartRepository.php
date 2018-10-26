@@ -172,6 +172,7 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
             $item->product = $product;
             $item->cover = $product->cover;
             $item->description = $product->description;
+            $item->attributes = $product->attributes;
             return $item;
         });
     }

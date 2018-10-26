@@ -35,6 +35,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\LanguageSwitcher::class,
         ],
 
         'api' => [
@@ -60,5 +61,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'employee' => \App\Http\Middleware\RedirectIfNotEmployee::class,
         'checkout' => \App\Http\Middleware\RedirectIfNotCustomer::class,
+       'language' => \App\Http\Middleware\LanguageSwitcher::class,
     ];
 }

@@ -17,6 +17,7 @@
         "laravel/cashier": "~7.0",
         "laravel/framework": "5.6.*",
         "laravel/tinker": "~1.0",
+        "maq89/paytabs-laravel": "^1.0",
         "nicolaslopezj/searchable": "^1.10",
         "paypal/rest-api-sdk-php": "*",
         "santigarcor/laratrust": "5.0.*",
@@ -34,7 +35,10 @@
         ],
         "psr-4": {
             "App\\": "app/"
-        }
+        },
+        "files": [
+            "app/paytabs/paytabs.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
