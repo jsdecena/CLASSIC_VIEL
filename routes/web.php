@@ -103,6 +103,7 @@ Route::namespace('Front')->group(function () {
         Route::get('checkout/success', 'CheckoutController@success')->name('checkout.success');
         Route::resource('customer.address', 'CustomerAddressController');
     });
+    Route::post('checkout/paytabs', 'CheckoutController@processPaytabs')->name('checkout.paytabs');
     Route::resource('cart', 'CartController');
     Route::get("category/{slug}", 'CategoryController@getCategory')->name('front.category.slug');
     Route::get("category/{slug}/list", 'CategoryController@getCategoryProducts')->name('front.category.products');

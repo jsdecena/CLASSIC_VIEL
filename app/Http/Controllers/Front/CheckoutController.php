@@ -7,6 +7,7 @@ use App\Shop\Cart\Requests\CartCheckoutRequest;
 use App\Shop\Carts\Repositories\Interfaces\CartRepositoryInterface;
 use App\Shop\Carts\Requests\PayPalCheckoutExecutionRequest;
 use App\Shop\Carts\Requests\StripeExecutionRequest;
+use App\Shop\Checkout\CheckoutRepository;
 use App\Shop\Countries\Country;
 use App\Shop\Couriers\Repositories\Interfaces\CourierRepositoryInterface;
 use App\Shop\Customers\Customer;
@@ -29,6 +30,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use PayPal\Exception\PayPalConnectionException;
 use App;
+use Ramsey\Uuid\Uuid;
 
 class CheckoutController extends Controller
 {
@@ -172,7 +174,7 @@ class CheckoutController extends Controller
             'msg_lang' => 'english',
             'reference_no' => '1231231',
             'site_url' => config('app.url'),
-            'return_url' => config('paytabs.redirect_url'),
+            'return_url' => config('app.url') . config('paytabs.redirect_url'),
             'cms_with_version' => 'API USING PHP'
         ];
 
@@ -271,6 +273,38 @@ class CheckoutController extends Controller
             Log::info($e->getMessage());
             return redirect()->route('checkout.index')->with('error', 'There is a problem processing your request.');
         }
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function processPaytabs(Request $request)
+    {
+        $customer = $request->user();
+        $billingAddress = $customer->addresses()->first();
+        $checkoutRepo = new CheckoutRepository;
+
+        $shipping = 0.00;
+        $tax = 0.00;
+        $checkoutRepo->buildCheckoutItems([
+            'reference' => $request->input('transaction_id'),
+            'courier_id' => 1,
+            'customer_id' => $customer->id,
+            'address_id' => $billingAddress->id,
+            'order_status_id' => 1,
+            'payment' => strtolower(config('paytabs.name')),
+            'discounts' => 0,
+            'total_products' => $this->cartRepo->getSubTotal(),
+            'total' => $this->cartRepo->getTotal(2, $shipping),
+            'total_paid' => $request->input('transaction_amount'),
+            'tax' => $tax
+        ]);
+
+        Cart::destroy();
+
+        return redirect()->route('checkout.success');
     }
 
     /**

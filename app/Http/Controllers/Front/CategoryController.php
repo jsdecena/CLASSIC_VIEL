@@ -5,9 +5,13 @@ namespace App\Http\Controllers\Front;
 use App\Shop\Categories\Repositories\CategoryRepository;
 use App\Shop\Categories\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Http\Controllers\Controller;
+use App\Shop\Products\Product;
+use App\Shop\Products\Transformations\ProductTransformable;
 
 class CategoryController extends Controller
 {
+    use ProductTransformable;
+
     /**
      * @var CategoryRepositoryInterface
      */
@@ -35,7 +39,9 @@ class CategoryController extends Controller
 
         $repo = new CategoryRepository($category);
 
-        $products = $repo->findProducts()->where('status', 1)->all();
+        $products = $repo->findProducts()->transform(function (Product $product) {
+            return $this->transformProduct($product);
+        })->where('status', 1)->all();
 
         return view('front.categories.category', [
             'category' => $category,
@@ -54,7 +60,9 @@ class CategoryController extends Controller
 
         $repo = new CategoryRepository($category);
 
-        $products = $repo->findProducts()->where('status', 1)->all();
+        $products = $repo->findProducts()->transform(function (Product $product) {
+            return $this->transformProduct($product);
+        })->where('status', 1)->all();
 
         return view('front.categories.category-images', [
             'category' => $category,
