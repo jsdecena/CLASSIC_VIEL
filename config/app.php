@@ -12,6 +12,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'description' => 'SABEL is the new ecommerce line launched by CLASSIC VEIL in the Summer of 2016. Sabel is a casual ready to wear line designed for every day comfort.',
 
     /*
     |--------------------------------------------------------------------------
