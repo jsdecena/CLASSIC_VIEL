@@ -161,7 +161,11 @@ class OrderController extends Controller
      * Generate order invoice
      *
      * @param int $id
+     *
      * @return mixed
+     * @throws \App\Shop\Cities\Exceptions\CityNotFoundException
+     * @throws \App\Shop\Countries\Exceptions\CountryNotFoundException
+     * @throws \App\Shop\Customers\Exceptions\CustomerNotFoundException
      */
     public function generateInvoice(int $id)
     {

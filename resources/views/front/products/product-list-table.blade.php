@@ -53,12 +53,19 @@
                 <td>
                     <h3>{{ $cartItem->name }}</h3>
                     @if($cartItem->options->has('productAttributeId'))
-                        @php($pattr = \App\Shop\ProductAttributes\ProductAttribute::find($cartItem->options->productAttributeId))
-                        @foreach($pattr->attributesValues as $it)
-                            <span class="label label-primary">{{ $it->attribute->name }} : {{ $it->value }}</span>
-                        @endforeach
-                    @else
-                        <span class="label label-primary">{{ $key }} : {{ $option }}</span>
+                        <p>Attributes:
+                            @php($pattr = \App\Shop\ProductAttributes\ProductAttribute::find($cartItem->options->productAttributeId))
+                            @foreach($pattr->attributesValues as $it)
+                                <span class="label label-primary">{{ $it->attribute->name }} : {{ $it->value }}</span>
+                            @endforeach
+                        </p>
+                    @endif
+                    @if($cartItem->options->has('measurement'))
+                        <p>Measurement:
+                            @foreach($cartItem->options->measurement as $k => $m)
+                                <span class="label label-warning">{{ucfirst($k)}} : {{$m}}</span>
+                            @endforeach
+                        </p>
                     @endif
                     <div class="product-description">
                         {!! $cartItem->product->description !!}

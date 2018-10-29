@@ -109,9 +109,20 @@
                                         {!! $product->description !!}
                                         @php($pattr = \App\Shop\ProductAttributes\ProductAttribute::find($product->productAttributeId))
                                         @if(!is_null($pattr))
-                                            @foreach($pattr->attributesValues as $it)
-                                                <span class="label label-primary">{{ $it->attribute->name }} : {{ $it->value }}</span>
-                                            @endforeach
+                                            <p><strong>Attributes:</strong> <br />
+                                                @foreach($pattr->attributesValues as $it)
+                                                    <span class="label label-primary">{{ $it->attribute->name }} : {{ $it->value }}</span>
+                                                @endforeach
+                                            </p>
+                                        @endif
+
+                                        @if(!is_null($product->measurement))
+                                            <p><strong>Measurement:</strong> <br/>
+                                                @php($measurement = json_decode($product->measurement))
+                                                @foreach($measurement as $k => $m)
+                                                    {{ucfirst($k)}} : {{$m}}
+                                                @endforeach
+                                            </p>
                                         @endif
                                     </td>
                                     <td>{{ $product->pivot->quantity }}</td>
