@@ -69,10 +69,20 @@
                                     </td>
                                     <td>
                                         <h3>{{ $cartItem->name }}</h3>
-                                        @if(isset($cartItem->options))
-                                            @foreach($cartItem->options as $key => $option)
-                                                <span class="label label-primary">{{ $key }} : {{ $option }}</span>
-                                            @endforeach
+                                        @if($cartItem->options->has('productAttributeId'))
+                                            <p>Attributes:
+                                                @php($pattr = \App\Shop\ProductAttributes\ProductAttribute::find($cartItem->options->productAttributeId))
+                                                @foreach($pattr->attributesValues as $it)
+                                                    <span class="label label-primary">{{ $it->attribute->name }} : {{ $it->value }}</span>
+                                                @endforeach
+                                            </p>
+                                        @endif
+                                        @if($cartItem->options->has('measurement'))
+                                            <p>Measurement:
+                                                @foreach($cartItem->options->measurement as $k => $m)
+                                                    <span class="label label-warning">{{ucfirst($k)}} : {{$m}}</span>
+                                                @endforeach
+                                            </p>
                                         @endif
                                         <div class="product-description">
                                             {!! $cartItem->product->description !!}

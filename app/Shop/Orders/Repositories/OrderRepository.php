@@ -109,16 +109,21 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
     /**
      * @param Product $product
      * @param int $quantity
+     * @param array $data
      */
-    public function associateProduct(Product $product, int $quantity = 1)
+    public function associateProduct(Product $product, int $quantity = 1, array $data = [])
     {
-        $this->model->products()->attach($product, [
+        $data = [
             'quantity' => $quantity,
             'product_name' => $product->name,
             'product_sku' => $product->sku,
             'product_description' => $product->description,
-            'product_price' => $product->price
-        ]);
+            'product_price' => $product->price,
+            'product_attribute_id' => $data['productAttributeId'],
+            'measurement' => json_encode($data['measurement'])
+        ];
+
+        $this->model->products()->attach($product, $data);
         $product->quantity = ($product->quantity - $quantity);
         $product->save();
     }
@@ -129,7 +134,7 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
     public function sendEmailToCustomer()
     {
         Mail::to($this->model->customer)
-            ->send(new SendOrderToCustomerMailable($this->findOrderById($this->model->id)));
+            ->send(new SendOrderToCustomerMailable($this->find($this->model->id)));
     }
 
     /**
@@ -141,7 +146,7 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
         $employee = $employeeRepo->findEmployeeById(1);
 
         Mail::to($employee)
-            ->send(new sendEmailNotificationToAdminMailable($this->findOrderById($this->model->id)));
+            ->send(new sendEmailNotificationToAdminMailable($this->find($this->model->id)));
     }
 
     /**
@@ -176,6 +181,8 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
             $product->description = $product->pivot->product_description;
             $product->price = $product->pivot->product_price;
             $product->quantity = $product->pivot->quantity;
+            $product->productAttributeId = $product->pivot->product_attribute_id;
+            $product->measurement = $product->pivot->measurement;
             return $product;
         });
     }
@@ -188,7 +195,15 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
         $items->each(function ($item) {
             $productRepo = new ProductRepository(new Product);
             $product = $productRepo->find($item->id);
-            $this->associateProduct($product, $item->qty);
+            if ($item->options->has('productAttributeId')) {
+                $this->associateProduct($product, $item->qty, [
+                    'productAttributeId' => $item->options->productAttributeId,
+                    'measurement' => $item->options->measurement
+                ]);
+            } else {
+                $this->associateProduct($product, $item->qty);
+            }
+
         });
     }
 }
