@@ -98,12 +98,12 @@ Route::namespace('Front')->group(function () {
         Route::get('checkout', 'CheckoutController@index')->name('checkout.index');
         Route::post('checkout', 'CheckoutController@store')->name('checkout.store');
         Route::get('checkout/execute', 'CheckoutController@executePayPalPayment')->name('checkout.execute');
-        // Route::get('checkout/paytabs', 'CheckoutController@paytabs')->name('checkout.paytabs');
         Route::post('checkout/execute', 'CheckoutController@charge')->name('checkout.execute');
         Route::get('checkout/cancel', 'CheckoutController@cancel')->name('checkout.cancel');
         Route::get('checkout/success', 'CheckoutController@success')->name('checkout.success');
         Route::resource('customer.address', 'CustomerAddressController');
     });
+    Route::post('checkout/paytabs', 'CheckoutController@processPaytabs')->name('checkout.paytabs');
     Route::resource('cart', 'CartController');
     Route::get("category/{slug}", 'CategoryController@getCategory')->name('front.category.slug');
     Route::get("category/{slug}/list", 'CategoryController@getCategoryProducts')->name('front.category.products');

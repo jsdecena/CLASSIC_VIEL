@@ -45,10 +45,9 @@
               <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 item">
                 <div class="item-product-image-box">
 
-                  <a class="product-image" href="/collections/sabel/products/product-1" title="Evander 1">
+                  <a class="product-image" href="#" title="Evander 1">
                     <div class="product-img-additional back">
-                      <img src="{{ asset("storage/$product->cover") }}" alt="{{ $product->name }}" class="img-bordered img-responsive">
-                      <!-- <img src="//cdn.shopify.com/s/files/1/1082/9152/products/Look1_large.jpg?v=1458479083" alt="Evander 1"> -->
+                      <img src="{{$product->cover}}" alt="{{ $product->name }}" class="img-bordered img-responsive">
                     </div>
                   </a>
                   <div class="product-hover-box hidden-xs">

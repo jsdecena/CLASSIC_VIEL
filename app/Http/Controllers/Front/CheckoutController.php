@@ -7,6 +7,8 @@ use App\Shop\Cart\Requests\CartCheckoutRequest;
 use App\Shop\Carts\Repositories\Interfaces\CartRepositoryInterface;
 use App\Shop\Carts\Requests\PayPalCheckoutExecutionRequest;
 use App\Shop\Carts\Requests\StripeExecutionRequest;
+use App\Shop\Checkout\CheckoutRepository;
+use App\Shop\Countries\Country;
 use App\Shop\Couriers\Repositories\Interfaces\CourierRepositoryInterface;
 use App\Shop\Customers\Customer;
 use App\Shop\Customers\Repositories\CustomerRepository;
@@ -20,14 +22,15 @@ use App\Shop\Products\Repositories\Interfaces\ProductRepositoryInterface;
 use App\Shop\Products\Transformations\ProductTransformable;
 use App\Shop\Shipping\ShippingInterface;
 use Exception;
-use Paytabs;
 use App\Http\Controllers\Controller;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use PayPal\Exception\PayPalConnectionException;
 use App;
+use Ramsey\Uuid\Uuid;
 
 class CheckoutController extends Controller
 {
@@ -133,6 +136,48 @@ class CheckoutController extends Controller
 
         $billingAddress = $customer->addresses()->first();
 
+        $shippingAddress = $customer->addresses()->first(); // You need to implement the shipping address
+        $country = Country::find($billingAddress->country_id);
+
+        $cartItems = $this->cartRepo->getCartItems()->pluck('name')->implode('||');
+        $cartItemsPrices = $this->cartRepo->getCartItems()->pluck('price')->implode('||');
+        $cartItemsQuantity = $this->cartRepo->getCartItems()->pluck('qty')->implode('||');
+
+        $shipping = 0.00;
+
+        $paytabs = [
+            'merchant_email' => config('paytabs.merchantEmail'),
+            'secret_key' => config('paytabs.key'),
+            'title' => $customer->name,
+            'cc_first_name' => $customer->name, // You need to modify customer's table with fname and lname
+            'cc_last_name' => $customer->name, // You need to modify customer's table with fname and lname
+            'email' => $customer->email,
+            'cc_phone_number' => '973', //You need to have a mobile column in customers table
+            'phone_number' => '33333333',
+            'billing_address' => $billingAddress->address_1,
+            'city' => $billingAddress->city,
+            'state' => $billingAddress->state_code,
+            'postal_code' => $billingAddress->zip,
+            'country' => $country->iso3,
+            'address_shipping' => $shippingAddress->address_1,
+            'city_shipping' => $shippingAddress->city,
+            'state_shipping' => $shippingAddress->state_code,
+            'postal_code_shipping' => $shippingAddress->zip,
+            'country_shipping' => $country->iso3,
+            'products_per_title' => $cartItems,
+            'currency' => config('cart.currency'),
+            'unit_price' => $cartItemsPrices,
+            'quantity' => $cartItemsQuantity,
+            'other_charges' => $shipping,
+            'amount' => $this->cartRepo->getTotal(2, $shipping),
+            'discount' => 0,
+            'msg_lang' => 'english',
+            'reference_no' => '1231231',
+            'site_url' => config('app.url'),
+            'return_url' => config('app.url') . config('paytabs.redirect_url'),
+            'cms_with_version' => 'API USING PHP'
+        ];
+
         return view('front.checkout', [
             'customer' => $customer,
             'billingAddress' => $billingAddress,
@@ -145,7 +190,8 @@ class CheckoutController extends Controller
             'cartItems' => $this->cartRepo->getCartItemsTransformed(),
             'shipment_object_id' => $shipment_object_id,
             'attr' => 2,
-            'rates' => $rates
+            'rates' => $rates,
+            'paytabs' => $paytabs
         ]);
     }
 
@@ -188,6 +234,7 @@ class CheckoutController extends Controller
      * Execute the PayPal payment
      *
      * @param PayPalCheckoutExecutionRequest $request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function executePayPalPayment(PayPalCheckoutExecutionRequest $request)
@@ -207,6 +254,7 @@ class CheckoutController extends Controller
 
     /**
      * @param StripeExecutionRequest $request
+     *
      * @return \Stripe\Charge
      */
     public function charge(StripeExecutionRequest $request)
@@ -228,9 +276,42 @@ class CheckoutController extends Controller
     }
 
     /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function processPaytabs(Request $request)
+    {
+        $customer = $request->user();
+        $billingAddress = $customer->addresses()->first();
+        $checkoutRepo = new CheckoutRepository;
+
+        $shipping = 0.00;
+        $tax = 0.00;
+        $checkoutRepo->buildCheckoutItems([
+            'reference' => $request->input('transaction_id'),
+            'courier_id' => 1,
+            'customer_id' => $customer->id,
+            'address_id' => $billingAddress->id,
+            'order_status_id' => 1,
+            'payment' => strtolower(config('paytabs.name')),
+            'discounts' => 0,
+            'total_products' => $this->cartRepo->getSubTotal(),
+            'total' => $this->cartRepo->getTotal(2, $shipping),
+            'total_paid' => $request->input('transaction_amount'),
+            'tax' => $tax
+        ]);
+
+        Cart::destroy();
+
+        return redirect()->route('checkout.success');
+    }
+
+    /**
      * Cancel page
      *
      * @param Request $request
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function cancel(Request $request)
@@ -246,54 +327,6 @@ class CheckoutController extends Controller
     public function success()
     {
         return view('front.checkout-success');
-    }
-
-    /**
-     * Success page
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function paytabs()
-    {
-      $pt = Paytabs::paytabs("yvj@hotmail.com", "dif7wmRdKsRGCtucXabSripAwpP98bFltVt0hld1N5IqzcCwnOpP7OqDefNmqtIUpbUGx8IkerKNEnk2bJSiyiWMxK9YeSSD4NkB");
-    $result = $pt->create_pay_page(array(
-      "merchant_email" => "MERCHANT_EMAIL",
-      'secret_key' => "SECRET_KEY",
-      'title' => "John Doe",
-      'cc_first_name' => "John",
-      'cc_last_name' => "Doe",
-      'email' => "customer@email.com",
-      'cc_phone_number' => "973",
-      'phone_number' => "33333333",
-      'billing_address' => "Juffair, Manama, Bahrain",
-      'city' => "Manama",
-      'state' => "Capital",
-      'postal_code' => "97300",
-      'country' => "BHR",
-      'address_shipping' => "Juffair, Manama, Bahrain",
-      'city_shipping' => "Manama",
-      'state_shipping' => "Capital",
-      'postal_code_shipping' => "97300",
-      'country_shipping' => "BHR",
-      "products_per_title"=> "Mobile Phone",
-      'currency' => "BHD",
-      "unit_price"=> "10",
-      'quantity' => "1",
-      'other_charges' => "0",
-      'amount' => "10.00",
-      'discount'=>"0",
-      "msg_lang" => "english",
-      "reference_no" => "1231231",
-      "site_url" => "https://your-site.com",
-      'return_url' => "https://www.mystore.com/paytabs_api/result.php",
-      "cms_with_version" => "API USING PHP"
-    ));
-
-        if($result->response_code == 4012){
-        return redirect($result->payment_url);
-          }
-          else
-          return redirect()->route('checkout.success');
     }
 
     /**
