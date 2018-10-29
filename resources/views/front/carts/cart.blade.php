@@ -69,7 +69,7 @@
                                     </td>
                                     <td>
                                         <h3>{{ $cartItem->name }}</h3>
-                                        @if($cartItem->options->has('productAttributeId'))
+                                        @if($cartItem->options->has('productAttributeId') && $cartItem->options->productAttributeId != null)
                                             <p>Attributes:
                                                 @php($pattr = \App\Shop\ProductAttributes\ProductAttribute::find($cartItem->options->productAttributeId))
                                                 @if(!is_null($pattr))

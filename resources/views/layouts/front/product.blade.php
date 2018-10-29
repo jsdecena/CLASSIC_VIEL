@@ -68,17 +68,15 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div id="text2" style="display:none">
-                              <label for="productAttribute">Custom Size</label> <br />
-                              <input type="number" class="form-control" name="custom_length"  id="length"  placeholder="Length" value="{{ old('length') }}" />
-                              <input type="number" class="form-control" name="custom_bust" id="bust" placeholder="Bust" value="{{ old('bust') }}" /><br />
-                              <input type="number" class="form-control" name="custom_arm" id="arm" placeholder="Arm" value="{{ old('arm') }}" />
-                              <input type="number" class="form-control" name="custom_bottom" id="bottom" placeholder="bottom" value="{{ old('bottom') }}" /><br />
-                            </div>
-                            Checkbox: <input type="checkbox" id="myCheck"  onclick="myFunction()"><br />
-                            <hr>
                         @endif
-
+                        <div id="text2">
+                            <label for="productAttribute">Custom Size</label> <br />
+                            <input type="number" class="form-control" name="custom_length"  id="length"  placeholder="Length" value="{{ old('length') }}" />
+                            <input type="number" class="form-control" name="custom_bust" id="bust" placeholder="Bust" value="{{ old('bust') }}" /><br />
+                            <input type="number" class="form-control" name="custom_arm" id="arm" placeholder="Arm" value="{{ old('arm') }}" />
+                            <input type="number" class="form-control" name="custom_bottom" id="bottom" placeholder="bottom" value="{{ old('bottom') }}" /><br />
+                        </div>
+                        <hr>
 
                         <div class="form-group">
                             <input type="number"
