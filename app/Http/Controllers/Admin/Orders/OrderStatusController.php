@@ -6,8 +6,6 @@ use App\Shop\OrderStatuses\Repositories\Interfaces\OrderStatusRepositoryInterfac
 use App\Shop\OrderStatuses\Repositories\OrderStatusRepository;
 use App\Shop\OrderStatuses\Requests\CreateOrderStatusRequest;
 use App\Shop\OrderStatuses\Requests\UpdateOrderStatusRequest;
-use Illuminate\Database\QueryException;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class OrderStatusController extends Controller
@@ -85,8 +83,10 @@ class OrderStatusController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
+     *
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(int $id)
     {

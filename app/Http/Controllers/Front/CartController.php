@@ -92,24 +92,22 @@ class CartController extends Controller
     {
         $product = $this->productRepo->findProductById($request->input('product'));
 
-        if($product->quantity < $request->input('quantity'))
-        {
-          return back()
-              ->with('error', 'we have only '.$product->quantity);
+        if($product->quantity < $request->input('quantity')) {
+          return back()->with('error', 'We have only ' . $product->quantity);
         }
 
+        $options = [
+            'productAttributeId' => $request->input('productAttribute'),
+            'measurement' => [
+                'length' => $request->input('custom_length'),
+                'bust' => $request->input('custom_bust'),
+                'arm' => $request->input('custom_arm'),
+                'bottom' => $request->input('custom_bottom')
+            ]
+        ];
+        $this->cartRepo->addToCart($product, $request->input('quantity'), $options);
 
-        if ($request->has('productAttribute')) {
-            $attr = $this->productAttributeRepo->findProductAttributeById($request->input('productAttribute'));
-            $product->price = $attr->price;
-            $attrVal = $attr->id;
-        }
-      
-
-        $this->cartRepo->addToCart($product, $request->input('quantity'));
-
-        return redirect()->route('cart.index')
-            ->with('message', 'Add to cart successful');
+        return redirect()->route('cart.index')->with('message', 'Add to cart successful');
     }
 
     /**

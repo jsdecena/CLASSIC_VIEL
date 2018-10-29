@@ -24,13 +24,11 @@ use App\Shop\Shipping\ShippingInterface;
 use Exception;
 use App\Http\Controllers\Controller;
 use Gloudemans\Shoppingcart\Facades\Cart;
-use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use PayPal\Exception\PayPalConnectionException;
 use App;
-use Ramsey\Uuid\Uuid;
 
 class CheckoutController extends Controller
 {

@@ -69,31 +69,11 @@
                                 </select>
                             </div>
                             <div id="text2" style="display:none">
-                              <label for="productAttribute">Custome Size</label> <br />
-                              <input type="number"
-                               class="form-control"
-                               name="LENGTH"
-                               id="quantity"
-                               placeholder="LENGTH"
-                               value="{{ old('quantity') }}" />
-                              <input type="number"
-                                class="form-control"
-                                name="BUST"
-                                id="quantity"
-                                placeholder="BUST"
-                                value="{{ old('quantity') }}" /><br />
-                              <input type="number"
-                               class="form-control"
-                               name="ARM"
-                               id="quantity"
-                               placeholder="ARM"
-                               value="{{ old('quantity') }}" />
-                              <input type="number"
-                                class="form-control"
-                                name="BOTTOM"
-                                id="quantity"
-                                placeholder="BOTTOM"
-                                value="{{ old('quantity') }}" /><br />
+                              <label for="productAttribute">Custom Size</label> <br />
+                              <input type="number" class="form-control" name="custom_length"  id="length"  placeholder="Length" value="{{ old('length') }}" />
+                              <input type="number" class="form-control" name="custom_bust" id="bust" placeholder="Bust" value="{{ old('bust') }}" /><br />
+                              <input type="number" class="form-control" name="custom_arm" id="arm" placeholder="Arm" value="{{ old('arm') }}" />
+                              <input type="number" class="form-control" name="custom_bottom" id="bottom" placeholder="bottom" value="{{ old('bottom') }}" /><br />
                             </div>
                             Checkbox: <input type="checkbox" id="myCheck"  onclick="myFunction()"><br />
                             <hr>

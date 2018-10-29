@@ -52,10 +52,13 @@
                 </td>
                 <td>
                     <h3>{{ $cartItem->name }}</h3>
-                    @if(isset($cartItem->options))
-                        @foreach($cartItem->options as $key => $option)
-                            <span class="label label-primary">{{ $key }} : {{ $option }}</span>
+                    @if($cartItem->options->has('productAttributeId'))
+                        @php($pattr = \App\Shop\ProductAttributes\ProductAttribute::find($cartItem->options->productAttributeId))
+                        @foreach($pattr->attributesValues as $it)
+                            <span class="label label-primary">{{ $it->attribute->name }} : {{ $it->value }}</span>
                         @endforeach
+                    @else
+                        <span class="label label-primary">{{ $key }} : {{ $option }}</span>
                     @endif
                     <div class="product-description">
                         {!! $cartItem->product->description !!}

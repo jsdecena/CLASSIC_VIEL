@@ -109,16 +109,20 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
     /**
      * @param Product $product
      * @param int $quantity
+     * @param null $attrId
      */
-    public function associateProduct(Product $product, int $quantity = 1)
+    public function associateProduct(Product $product, int $quantity = 1, $attrId = null)
     {
-        $this->model->products()->attach($product, [
+        $data = [
             'quantity' => $quantity,
             'product_name' => $product->name,
             'product_sku' => $product->sku,
             'product_description' => $product->description,
-            'product_price' => $product->price
-        ]);
+            'product_price' => $product->price,
+            'product_attribute_id' => $attrId
+        ];
+
+        $this->model->products()->attach($product, $data);
         $product->quantity = ($product->quantity - $quantity);
         $product->save();
     }
@@ -176,6 +180,7 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
             $product->description = $product->pivot->product_description;
             $product->price = $product->pivot->product_price;
             $product->quantity = $product->pivot->quantity;
+            $product->productAttributeId = $product->pivot->product_attribute_id;
             return $product;
         });
     }
@@ -188,7 +193,12 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
         $items->each(function ($item) {
             $productRepo = new ProductRepository(new Product);
             $product = $productRepo->find($item->id);
-            $this->associateProduct($product, $item->qty);
+            if ($item->options->has('productAttributeId')) {
+                $this->associateProduct($product, $item->qty, $item->options->productAttributeId);
+            } else {
+                $this->associateProduct($product, $item->qty);
+            }
+
         });
     }
 }
