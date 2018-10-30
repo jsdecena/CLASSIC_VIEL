@@ -146,7 +146,7 @@ class CheckoutController extends Controller
         $paytabs = [
             'merchant_email' => config('paytabs.merchantEmail'),
             'secret_key' => config('paytabs.key'),
-            'title' => $customer->name,
+            'title' => '5567',
             'cc_first_name' => $customer->name, // You need to modify customer's table with fname and lname
             'cc_last_name' => $customer->name, // You need to modify customer's table with fname and lname
             'email' => $customer->email,

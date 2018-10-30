@@ -26,7 +26,9 @@
   <div class="block-home-five-2 table">
     <div class="table-cell ">
       <h2>The Brand</h2>
-      <p>CLASSIC VEIL relishes in the sartorial </br> journey between Modern</br> and Tradition, East and West</br>, between contemporary </br> elegance  </br> and the fiery passion</br> of the Designer’s Arabic roots.</p>
+      <p>Classic Veil, was launched in 1998 </br> to breath creativity</br> and life into
+the traditional </br> abayas of the region ,</br>, weaving a modern sense of
+fashion </br> like never before, </br> while respecting local customs  </br> and designs.</br> Finally... the Veil has come of age !</p>
 
       <a href="https://CLASSIC-VEIL.com/pages/about-us">About<i class="fa fa-angle-right"></i></a>
 

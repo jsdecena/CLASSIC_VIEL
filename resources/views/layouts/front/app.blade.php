@@ -146,8 +146,7 @@
                                     <div class="logo-center clearfix" id="logo">
                                         <h1 class="logo">
                                             <a href="/">
-                                                <img src="/img/logo-alt1.png" class="standard"/>
-                                                <img alt="Chador" src="/img/logo-alt1.png" class="retina"/>
+                                                <img alt="Chador" src="/img/logo-alt1.png" />
                                             </a>
                                         </h1>
                                     </div>

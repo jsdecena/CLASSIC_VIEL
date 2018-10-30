@@ -38,7 +38,7 @@
         </tr>
         </tfoot>
         <tbody>
-        
+
         @foreach($cartItems as $cartItem)
             <tr>
                 <td>
@@ -55,9 +55,11 @@
                     @if($cartItem->options->has('productAttributeId'))
                         <p>Attributes:
                             @php($pattr = \App\Shop\ProductAttributes\ProductAttribute::find($cartItem->options->productAttributeId))
-                            @foreach($pattr->attributesValues as $it)
-                                <span class="label label-primary">{{ $it->attribute->name }} : {{ $it->value }}</span>
-                            @endforeach
+                            @if(!is_null($pattr))
+                                @foreach($pattr->attributesValues as $it)
+                                    <span class="label label-primary">{{ $it->attribute->name }} : {{ $it->value }}</span>
+                                @endforeach
+                            @endif
                         </p>
                     @endif
                     @if($cartItem->options->has('measurement'))
