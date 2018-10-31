@@ -11,8 +11,8 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
-    'description' => 'SABEL is the new ecommerce line launched by CLASSIC VEIL in the Summer of 2016. Sabel is a casual ready to wear line designed for every day comfort.',
+    'name' => env('APP_NAME', 'Classic Veil - Luxury Abayas'),
+    'description' => 'Classic Veil, was launched in 1998 to breath creativity and life into the traditional abayas of the region , weaving a modern sense of fashion like never before, while respecting local customs and designs.',
 
     /*
     |--------------------------------------------------------------------------
