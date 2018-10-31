@@ -139,13 +139,18 @@
 
             <div class="block block-custom-html">
               <div id="custom-html" class="block-title">
-                <strong><span>SABEL</span></strong>
+                <strong><span>CLASSIC VEIL</span></strong>
               </div>
               <div class="block-content">
-                <p>SABEL is the new Online Boutique launched by Chador in the Summer of 2016. Sabel is a casual ready to wear line designed for every day comfort. The SS16 Collection consists of comfortable, loose, and light maxi beach dresses and kaftans that flatters a range of body types.
-                  The classic design of the various styles subtly adapts to each wearer's individual aesthetic from the conservative dresser to the beach goer.
-                  Sabel dresses are meticulously made with precision tailoring.
-                  All garments are %100 Linen</p>
+                <p>Classic Veil, was launched in 1998
+                    to breath creativity
+                    and life into the traditional
+                    abayas of the region ,
+                    , weaving a modern sense of fashion
+                    like never before,
+                    while respecting local customs
+                    and designs.
+                    Finally... the Veil has come of age !</p>
                 </div>
               </div>
 
@@ -233,7 +238,7 @@
                 </div>
               </div>
 
-              <div class="images-block"><img src="//cdn.shopify.com/s/files/1/1082/9152/t/5/assets/sidebar_staticblock.jpg?15477611418652202961" alt=""></div>
+              <div class="images-block"><img src="{{ asset('../img/sidebar_staticblock.jpg')}}" alt=""></div>
             </div>
           </div>
 
