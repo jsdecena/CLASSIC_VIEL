@@ -279,20 +279,35 @@
                                 <!-- End Top Search ============================================= -->
                                 <div id="cart">
                                     <div class="parent shopping-bag-item">
-                                        <a class="cart-contents" href="/cart"
-                                           title="View contents of your shopping cart">
-                                            <i class="fa fa-shopping-cart"></i>
-                                            <span class="cart-count">{{ $cartCount }}</span>
-                                        </a>
+                                      @if($cartCount == 0)
+                                      <a href="{{ route('cart.index') }}" class="cart-contents"  title="View contents of your shopping cart">
+                                          <i class="fa fa-shopping-cart"></i>
+                                          <span class="cart-number">{{ $cartCount }}</span>
+                                      </a>
                                         <div class="shopping-bag">
-
                                             <div class="shopping-no-items">
                                                 <a href="{{route('front.category.slug', $category->slug)}}"
                                                    class="level-top"></a>
                                                 <p class="empty">You have no items in your shopping cart.</p>
                                             </div>
-
                                         </div>
+                                        @else
+                                        <div class="shopping-no-items">
+                                            <a href="{{ route('cart.index') }}">
+                                              <i class="fa fa-shopping-cart"></i>
+                                              <span class="cart-number">{{ $cartCount }}</span>
+                                            </a>
+                                        </div>
+                                        @endif
+                                        <!-- <a href="{{ route('cart.index') }}" class="cart-contents"  title="View contents of your shopping cart">
+                                            <i class="fa fa-shopping-cart"></i>
+                                            <span class="cart-number">{{ $cartCount }}</span>
+                                        </a> -->
+                                        <!-- <a href="{{ route('cart.index') }}" title="View contents of your shopping cart" class="awemenu-icon menu-shopping-cart">
+                                          <i class="fa fa-shopping-cart"></i>
+                                          <span class="cart-number">{{ $cartCount }}</span>
+                                      </a> -->
+
                                     </div>
                                 </div>
                             </div>

@@ -131,16 +131,34 @@ class CheckoutController extends Controller
         $paymentGateways = collect(explode(',', config('payees.name')))->transform(function ($name) {
             return config($name);
         })->all();
-
         $billingAddress = $customer->addresses()->first();
-
+        $iso3 = null;
+        $billingAddress1 = null;
+        $billingAddressCity = null;
+        $billingAddressState = null;
+        $billingAddressZip = null;
+        if (!is_null($billingAddress)) {
+            $country = Country::find($billingAddress->country_id);
+            $billingAddress1 = $billingAddress->address_1;
+            $billingAddressCity = $billingAddress->city;
+            $billingAddressState = $billingAddress->state_code;
+            $billingAddressZip = $billingAddress->zip;
+            $iso3 = $country->iso3;
+        }
         $shippingAddress = $customer->addresses()->first(); // You need to implement the shipping address
-        $country = Country::find($billingAddress->country_id);
-
+        $shippingAddress1 = null;
+        $shippingAddressCity = null;
+        $shippingAddressState = null;
+        $shippingAddressZip = null;
+        if (!is_null($shippingAddress)) {
+            $shippingAddress1 = $shippingAddress->address_1;
+            $shippingAddressCity = $shippingAddress->city;
+            $shippingAddressState = $shippingAddress->state_code;
+            $shippingAddressZip = $shippingAddress->zip;
+        }
         $cartItems = $this->cartRepo->getCartItems()->pluck('name')->implode('||');
         $cartItemsPrices = $this->cartRepo->getCartItems()->pluck('price')->implode('||');
         $cartItemsQuantity = $this->cartRepo->getCartItems()->pluck('qty')->implode('||');
-
         $shipping = 0.00;
 
         $paytabs = [

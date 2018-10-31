@@ -14,7 +14,7 @@ class AddMeasurementColumnToOrderProductTable extends Migration
     public function up()
     {
         Schema::table('order_product', function (Blueprint $table) {
-            $table->json('measurement')->nullable();
+            $table->text('measurement')->nullable();
         });
     }
 
