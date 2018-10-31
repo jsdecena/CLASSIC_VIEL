@@ -145,7 +145,7 @@
                                     <div class="logo-center clearfix" id="logo">
                                         <h1 class="logo">
                                             <a href="/">
-                                                <img alt="Chador" src="/img/logo-alt1.png" />
+                                                <img  src="{{ asset('/img/logo-alt1.png') }}" />
                                             </a>
                                         </h1>
                                     </div>
