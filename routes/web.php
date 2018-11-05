@@ -78,10 +78,11 @@ Route::get('/lang/{lang?}',[
      'uses'=>'LangSwitcherController@LangSwitcher',
      'as'  => 'lang.switch'
  ]);
- 
+
 Route::namespace('Front')->group(function () {
 
     Route::get('/', 'HomeController@index')->name('home');
+    Route::get('contact_us', 'HomeController@contactUs')->name('contact_us');
     Route::group(['middleware' => ['auth', 'web']], function () {
 
         Route::namespace('Payments')->group(function () {

@@ -52,6 +52,7 @@ class CategoryController extends Controller
      */
     public function store(CreateCategoryRequest $request)
     {
+      dd($request->all());
         $this->categoryRepo->createCategory($request->except('_token', '_method'));
 
         $request->session()->flash('message', 'Category created');

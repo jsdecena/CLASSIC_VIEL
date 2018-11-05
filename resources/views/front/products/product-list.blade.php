@@ -28,7 +28,7 @@
                   <a class="sort-link" href="title-descending" title="Set Descending Direction" data-toggle="modal" data-target="#myModal">
                     <i class="fa fa-long-arrow-down"></i>
                   </a> -->
-                  <a data-toggle="modal" data-target="#order_modal_8" title="Show order" href="javascript: void(0)"><i class="fa fa-long-arrow-down"></i><span>Size Calculator</span></a>
+
                 </div>
 
                 <p class="view-mode  hidden-xxs">
@@ -108,6 +108,10 @@
                   <div class="custom-button">
                     <a class="btn" href="{{ route('front.get.product', str_slug($product->slug)) }}">View Product</a>
                   </div>
+
+                    <a data-toggle="modal" data-target="#order_modal_8" title="Show order" href="javascript: void(0)"><span>| Size Chart |</span></a>
+                  <!-- <li class="product-links-item u-inline-block u-va-middle"><a href="#" class="product-links-item-link" data-popin-open data-popin-target="size">Size chart</a></li> -->
+
                 </div>
 
                 <div class="novaworks-quick-act">
@@ -273,117 +277,135 @@
     <p class="alert alert-warning">No products yet.</p>
 @endif
 <div class="modal fade" id="order_modal_8" tabindex="-1" role="dialog" aria-labelledby="MyOrders" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+    <div class="modal-dialog modal-lg" role="document" style="width: 1400px;margin: auto;">
+        <div class="modal-content" style="background-color:#F0F0F0;">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title" id="myModalLabel">Size calculator</h4>
-            </div>
-            <div class="modal-body">
-              <div class="row">
-              <div class="col-sm-9 col-md-6 col-lg-8">
-                <table class="table table-bordered table-hover">
-                <thead>
-                  <tr>
-                    <th><strong>#</strong></th>
-                    <th><strong>S</strong></th>
-                    <th><strong>M</strong></th>
-                    <th><strong>L</strong></th>
-                    <th><strong>XL</strong></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>LENGTH</td>
-                    <td>152.5 CM</td>
-                    <td>152.5 CM</td>
-                    <td>152.5 CM</td>
-                    <td>152.5 CM</td>
-                    </tr>
-                  <tr>
-                    <td>BUST</td>
-                    <td>22.5 CM</td>
-                    <td>26.7 CM</td>
-                    <td>30.5 CM</td>
-                    <td>35.5 CM</td>
-                  </tr>
-                <tr>
-                    <td>ARM</td>
-                    <td>17.5 CM</td>
-                    <td>20.3 CM</td>
-                    <td>22.5 CM</td>
-                    <td>28 CM</td>
-                  </tr>
-                <tr>
-                    <td>BOTTOM</td>
-                    <td>17.5 CM</td>
-                    <td>20.3 CM</td>
-                    <td>22.5 CM</td>
-                    <td>28 CM</td>
-                  </tr>
-                <tr>
-                    <td>SLEEVE</td>
-                    <td>71 CM</td>
-                    <td>71 CM</td>
-                    <td>71 CM</td>
-                    <td>71 CM</td>
-                  </tr>
-                <tr>
-                    <td>HIPS</td>
-                    <td>25.5 CM</td>
-                    <td>29.3 CM</td>
-                    <td>33 CM</td>
-                    <td>38 CM</td>
-                  </tr>
-                <tr>
-                    <td>SHOULDER</td>
-                    <td>35.6 CM</td>
-                    <td>38.1 CM</td>
-                    <td>40.5 CM</td>
-                    <td>43.2 CM</td>
-                  </tr>
 
-                </tbody>
-              </table>
             </div>
-            <div class="col-sm-3 col-md-6 col-lg-4">
+            <div class="modal-body" style="background-color:#F0F0F0;">
+              <div class="row">
+            <div class="col-sm-3">
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <h4 class="modal-title" id="myModalLabel">Size calculator</h4>
+              <hr />
+              <p>Select your measurements using the dropdown lists below
+
+              and our size calculator will recommend the best size for you<p>
+              <ht>------------------------------------------------------</ht><br />
+              <select name="bustSize" style="background-color:#F0F0F0;">
+              <option value="0" disabled selected>BUST ↓</option>
+              <option value="22.8">22.8 (CM)</option>
+              <option value="26.7">26.7 (CM)</option>
+              <option value="30.5">30.5 (CM)</option>
+              <option value="35.5">35.5 (CM)</option>
+            </select>
+            <ht>------------------------------------------------------</ht><br />
+            <select name="hipsSize" style="background-color:#F0F0F0;">
+              <option value="0" disabled selected>HIPS ↓</option>
+              <option value="25.5">25.5 (CM)</option>
+              <option value="29.3">29.3 (CM)</option>
+              <option value="33">33 (CM)</option>
+              <option value="38">38 (CM)</option>
+            </select>
+            <ht>------------------------------------------------------</ht><br />
+            <select name="armSize" style="background-color:#F0F0F0;">
+              <option value="0" disabled selected>ARM ↓</option>
+              <option value="22.8">22.8 (CM)</option>
+              <option value="26.7">26.7 (CM)</option>
+              <option value="30.5">30.5 (CM)</option>
+              <option value="35.5">35.5 (CM)</option>
+            </select>
+
+            Your size is : <label class="result"></label>
+          </div>
+            <div class="col-sm-4">
             <table class="sizecharttable" summary="Women's Clothing Sizing Chart">
               <tbody>
               <tr>
               <td class="colHeader">  </td>
               </tr>
               <tr>
-              <td> <img class="u-fit-h" src="{{ asset('../img/measurment.png')}}" alt=""> </td>
+              <td> <img class="u-fit-h" src="{{ asset('../img/size-chart.png')}}" alt=""> </td>
               </tbody>
               </table>
           </div>
-          <div class="col-sm-4">
-            Calculate your size :
-            <select name="bustSize">
-            <option value="0" disabled selected>BUST ↓</option>
-            <option value="22.8">22.8 (CM)</option>
-            <option value="26.7">26.7 (CM)</option>
-            <option value="30.5">30.5 (CM)</option>
-            <option value="35.5">35.5 (CM)</option>
-          </select>
+          <div class="col-sm-5">
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <h4 class="modal-title" id="myModalLabel">Select your fit size :</h4>
+            <br />
+            <br />
+            <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th><strong>#</strong></th>
+                <th><strong>S</strong></th>
+                <th><strong>M</strong></th>
+                <th><strong>L</strong></th>
+                <th><strong>XL</strong></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>LENGTH</td>
+                <td>152.5 CM</td>
+                <td>152.5 CM</td>
+                <td>152.5 CM</td>
+                <td>152.5 CM</td>
+                </tr>
+              <tr>
+                <td>BUST</td>
+                <td>22.5 CM</td>
+                <td>26.7 CM</td>
+                <td>30.5 CM</td>
+                <td>35.5 CM</td>
+              </tr>
+            <tr>
+                <td>ARM</td>
+                <td>17.5 CM</td>
+                <td>20.3 CM</td>
+                <td>22.5 CM</td>
+                <td>28 CM</td>
+              </tr>
+            <tr>
+                <td>BOTTOM</td>
+                <td>17.5 CM</td>
+                <td>20.3 CM</td>
+                <td>22.5 CM</td>
+                <td>28 CM</td>
+              </tr>
+            <tr>
+                <td>SLEEVE</td>
+                <td>71 CM</td>
+                <td>71 CM</td>
+                <td>71 CM</td>
+                <td>71 CM</td>
+              </tr>
+            <tr>
+                <td>HIPS</td>
+                <td>25.5 CM</td>
+                <td>29.3 CM</td>
+                <td>33 CM</td>
+                <td>38 CM</td>
+              </tr>
+            <tr>
+                <td>SHOULDER</td>
+                <td>35.6 CM</td>
+                <td>38.1 CM</td>
+                <td>40.5 CM</td>
+                <td>43.2 CM</td>
+              </tr>
 
-          <select name="hipsSize">
-            <option value="0" disabled selected>HIPS ↓</option>
-            <option value="25.5">25.5 (CM)</option>
-            <option value="29.3">29.3 (CM)</option>
-            <option value="33">33 (CM)</option>
-            <option value="38">38 (CM)</option>
-          </select>
-
-          <select name="armSize">
-            <option value="0" disabled selected>ARM ↓</option>
-            <option value="22.8">22.8 (CM)</option>
-            <option value="26.7">26.7 (CM)</option>
-            <option value="30.5">30.5 (CM)</option>
-            <option value="35.5">35.5 (CM)</option>
-          </select>
-
-          Your size is : <label class="result"></label>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

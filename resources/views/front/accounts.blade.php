@@ -92,7 +92,7 @@
                                                                     <th>Total</th>
                                                                     <th>Status</th>
                                                                 </thead>
-                                                                {{ dd($order->address) }}
+                                                            
                                                                 <tbody>
                                                                     <tr>
                                                                         <td>

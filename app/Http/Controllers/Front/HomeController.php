@@ -34,4 +34,8 @@ class HomeController extends Controller
 
         return view('front.index', compact('cat1', 'cat2'));
     }
+    public function contactUs()
+    {
+      return view('front.contact-us');
+    }
 }

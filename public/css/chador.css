@@ -2425,7 +2425,7 @@ h3.product-name a { font-family: Questrial; font-size: 20px }
 .products-list .price-box span,
 .price-box span,
 .product-view .product-name h1,
-.page-title h1, h2 { letter-spacing: .05em }
+.page-title h1, h2 { letter-spacing: .01em }
 .product-codes p { font-family: Questrial; color: #c3c6c8}
 .product-codes span,
 .availability.in-stock span { color: #000 }
@@ -2534,7 +2534,7 @@ transform: rotate(0deg) !important;
 #shopping-cart-totals-table tbody tr:first-child td { padding-top: 20px }
 .block_contact { font-family: 'Questrial'; }
 .block_contact .contact-map { padding: 10px;
-   background-image: url(//cdn.shopify.com/s/files/1/1082/9152/t/5/assets/Contact.jpg?15661845233084077795);
+   background-image: url('../img/wp5iJ3sQ.jpeg');
    background-size: cover;
    background-position: right center;
    background-repeat: no-repeat;

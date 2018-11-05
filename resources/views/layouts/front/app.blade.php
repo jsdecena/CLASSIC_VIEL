@@ -209,13 +209,13 @@
                                                                 @else
                                                                     <a href="{{route('front.category.slug', $category->slug)}}"
                                                                        class="level-top">
-                  <span>
-                    @if(session('locale')=='en')
-                          {{$category->name}}
-                      @else
-                          {{$category->name_ar}}
-                      @endif
-                  </span>
+                                                                <span>
+                                                                  @if(session('locale')=='en')
+                                                                        {{$category->name}}
+                                                                    @else
+                                                                        {{$category->name_ar}}
+                                                                    @endif
+                                                                </span>
                                                                         <i class="fa fa-angle-down"></i>
                                                                     </a>
                                                                 @endif
@@ -225,35 +225,42 @@
                                                             <li class="level0 level-top">
                                                                 <a href="{{ route('accounts', ['tab' => 'profile']) }}"
                                                                    class="level-top">
-                  <span>
-                    {{ __('general.my_account') }}
-                  </span>
+                                                              <span>
+                                                                {{ __('general.my_account') }}
+                                                              </span>
                                                                 </a>
                                                             </li>
                                                             <li class="level0 level-top parent-dropdown">
                                                                 <a href="{{ route('logout') }}" class="level-top">
-                <span>
-                  {{ __('general.logout') }}
-                </span>
+                                                                  <span>
+                                                                    {{ __('general.logout') }}
+                                                                  </span>
                                                                     <i class="fa fa-angle-down"></i>
                                                                 </a>
                                                             </li>
                                                         @else
                                                             <li class="level0 level-top">
                                                                 <a href="{{ route('login') }}" class="level-top">
-                <span>
-                  {{ __('general.login') }}
-                </span>
+                                                                  <span>
+                                                                    {{ __('general.login') }}
+                                                                  </span>
                                                                 </a>
                                                             </li>
                                                             <li class="level0 level-top">
                                                                 <a href="{{ route('register') }}" class="level-top">
-                <span>
-                  {{ __('general.register') }}
-                </span>
+                                                                <span>
+                                                                  {{ __('general.register') }}
+                                                                </span>
                                                                 </a>
                                                             </li>
                                                         @endif
+                                                        <li class="level0 level-top">
+                                                            <a href="{{ route('contact_us') }}" class="level-top">
+                                                            <span>
+                                                              Contact us
+                                                            </span>
+                                                            </a>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </div>

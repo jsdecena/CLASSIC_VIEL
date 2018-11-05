@@ -46,10 +46,10 @@ fashion </br> like never before, </br> while respecting local customs  </br> and
 <div class="parallax-content">
   <div class="block-home-five-2 table">
     <div class="table-cell ">
-    <h2>Ramadan</br> 2018</h2>
+
     <p></p>
 
-    <a href="https://www.CLASSIC-VEIL.com.sa/pages/ramadan-18">TAKE A LOOK<i class="fa fa-angle-right"></i></a>
+    
 
     </div>
   </div>

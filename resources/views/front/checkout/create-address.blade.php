@@ -20,7 +20,7 @@
                         <label for="address_2">Address 2 </label>
                         <input type="text" name="address_2" id="address_2" placeholder="Address 2" class="form-control" value="{{ old('address_2') }}">
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="country_id">Country </label>
                         <select name="country_id" id="country_id" class="form-control">
                             @foreach($countries as $country)
@@ -43,7 +43,7 @@
                                 <option value="{{ $city->id }}">{{ $city->name }}</option>
                             @endforeach
                         </select>
-                    </div>
+                    </div> -->
                     <div class="form-group">
                         <label for="zip">Zip Code </label>
                         <input type="text" name="zip" id="zip" placeholder="Zip code" class="form-control" value="{{ old('zip') }}">

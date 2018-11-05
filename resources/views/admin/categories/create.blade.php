@@ -17,12 +17,20 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="name">Name <span class="text-danger">*</span></label>
+                        <label for="name">Name En<span class="text-danger">*</span></label>
                         <input type="text" name="name" id="name" placeholder="Name" class="form-control" value="{{ old('name') }}">
                     </div>
                     <div class="form-group">
-                        <label for="description">Description </label>
+                        <label for="name">Name Ar<span class="text-danger">*</span></label>
+                        <input type="text" name="name_ar" id="name_ar" placeholder="Arabic name" class="form-control" value="{{ old('name_ar') }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description En</label>
                         <textarea class="form-control ckeditor" name="description" id="description" rows="5" placeholder="Description">{{ old('description') }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description Ar</label>
+                        <textarea class="form-control ckeditor" name="description_ar" id="description" rows="5" placeholder="Description">{{ old('description') }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="cover">Cover </label>
