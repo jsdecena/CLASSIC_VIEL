@@ -2,6 +2,7 @@
 
 namespace App\Shop\Orders\Repositories;
 
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Jsdecena\Baserepo\BaseRepository;
 use App\Shop\Employees\Employee;
 use App\Shop\Employees\Repositories\EmployeeRepository;
@@ -44,7 +45,11 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
     public function createOrder(array $params) : Order
     {
         try {
+
             $order = $this->create($params);
+
+            $orderRepo = new OrderRepository($order);
+            $orderRepo->buildOrderDetails(Cart::content());
 
             event(new OrderCreateEvent($order));
 
@@ -119,8 +124,8 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
             'product_sku' => $product->sku,
             'product_description' => $product->description,
             'product_price' => $product->price,
-            'product_attribute_id' => $data['productAttributeId'],
-            'measurement' => json_encode($data['measurement'])
+            'product_attribute_id' => isset($data['productAttributeId']) ? $data['productAttributeId'] : null,
+            'measurement' => isset($data['measurement'])? json_encode($data['measurement']) : null
         ];
 
         $this->model->products()->attach($product, $data);

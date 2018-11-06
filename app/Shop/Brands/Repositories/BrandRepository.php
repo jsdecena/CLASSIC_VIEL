@@ -99,8 +99,9 @@ class BrandRepository extends BaseRepository implements BrandRepositoryInterface
     {
         return $this->model->products()->get();
     }
+
     /**
-     * @param int $id
+     * @param array $name
      *
      * @return Brand
      * @throws BrandNotFoundErrorException
@@ -108,7 +109,6 @@ class BrandRepository extends BaseRepository implements BrandRepositoryInterface
     public function findBrandByName(array $name) : Brand
     {
         try {
-            dd($this->findOneByOrFail($name));
             return $this->findOneByOrFail($name);
           } catch (ModelNotFoundException $e) {
               throw new BrandNotFoundErrorException($e);
